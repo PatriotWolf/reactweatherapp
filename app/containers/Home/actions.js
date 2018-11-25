@@ -4,7 +4,7 @@
  *
  */
 
-import { DEFAULT_ACTION, HOME_STORE_COORDINATES } from './constants';
+import { DEFAULT_ACTION, HOME_STORE_COORDINATES, HOME_STORE_WEATHER } from './constants';
 
 export function defaultAction() {
   return {
@@ -16,5 +16,12 @@ export function homeStoreCoordinatesAction(coordinates) {
   return {
     type: HOME_STORE_COORDINATES,
     payload: coordinates
+  };
+}
+
+export function homeStoreWeatherAction(JSONdata) {
+  return {
+    type: HOME_STORE_WEATHER,
+    payload: JSONdata
   };
 }

@@ -53,14 +53,12 @@ export class Home extends React.PureComponent {
         There's something wrong when obtain you Coordinate
       </div>)
     }
+
     return (
       <div className="container theme-showcase pt-5" role="main">
       {flashMsg}
-      {JSON.stringify(this.props.home)}
         <div className="jumbotron mt-5">
-          {coordinate}
-            
-          
+          {coordinate}        
         </div>   
       </div>
     );
