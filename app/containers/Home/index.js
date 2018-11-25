@@ -13,6 +13,8 @@ import { compose } from 'redux';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
+import WeatherComponent from 'components/WeatherComponent';
+
 import { homeStoreCoordinatesAction } from './actions';
 import makeSelectHome,{selectGetLocation} from './selectors';
 import reducer from './reducer';
@@ -44,7 +46,8 @@ export class Home extends React.PureComponent {
     // alert(error.message);
   }
   render() {
-    let coordinate, flashMsg;
+    let coordinate, flashMsg, content;
+
     if(this.state.isUpdated){
       coordinate=<p className="text-center">Your Coordinates Is Ready</p> 
     }
@@ -53,13 +56,18 @@ export class Home extends React.PureComponent {
         There's something wrong when obtain you Coordinate
       </div>)
     }
-
+    if(this.props.home.condition.isWeatherLoaded){
+      content=<WeatherComponent weatherData={this.props.home.weather}/>
+    }
+    else {
+      content=<div className="jumbotron mt-5">
+          {coordinate}        
+        </div> 
+    }
     return (
       <div className="container theme-showcase pt-5" role="main">
       {flashMsg}
-        <div className="jumbotron mt-5">
-          {coordinate}        
-        </div>   
+      {content}
       </div>
     );
   }
