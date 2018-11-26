@@ -16,7 +16,7 @@ import injectReducer from 'utils/injectReducer';
 import WeatherComponent from 'components/WeatherComponent';
 import SearchComponent from 'components/SearchComponent';
 
-import { homeStoreCoordinatesAction } from './actions';
+import { homeStoreCoordinatesAction, homeFindGeoCoordinatesAction } from './actions';
 import makeSelectHome,{selectGetLocation} from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -47,6 +47,7 @@ export class Home extends React.PureComponent {
   }
   onSumbitNewLocation(){
     console.log(this.state);
+    this.props.dispatch(homeFindGeoCoordinatesAction(this.state.text));
   }
   onHandleInputChange(event){
     this.setState({text: event.target.value});
