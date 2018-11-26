@@ -37,7 +37,7 @@ function WeatherComponent(props) {
   }
   return (
     <div className="card">
-      <div className="card-header">
+      <div className="card-header bg-danger text-white">
         {data.description}
       </div>
 

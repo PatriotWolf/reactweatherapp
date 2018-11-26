@@ -48,6 +48,12 @@ module.exports = options => ({
         use: ['style-loader', 'css-loader'],
       },
       {
+        // Preprocess 3rd party .css files located in node_modules
+        test: /\.scss$/,
+        include: /node_modules/,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
+      },
+      {
         test: /\.(eot|otf|ttf|woff|woff2)$/,
         use: 'file-loader',
       },

@@ -20,7 +20,7 @@ import makeSelectHome,{selectGetLocation} from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
-
+import './style.css';
 /* eslint-disable react/prefer-stateless-function */
 export class Home extends React.PureComponent {
     constructor(props){
@@ -51,6 +51,12 @@ export class Home extends React.PureComponent {
     if(this.state.isUpdated){
       coordinate=<p className="text-center">Your Coordinates Is Ready</p> 
     }
+    else {
+      content=<div className="jumbotron mt-5 text-center">
+          <div className="loader"></div>
+          Please wait untill we finish processing your coordinates
+        </div>
+    }
     if(this.state.isError){
       flashMsg=(<div className="alert alert-danger text-center" role="alert">
         There's something wrong when obtain you Coordinate
@@ -58,11 +64,6 @@ export class Home extends React.PureComponent {
     }
     if(this.props.home.condition.isWeatherLoaded){
       content=<WeatherComponent weatherData={this.props.home.weather}/>
-    }
-    else {
-      content=<div className="jumbotron mt-5">
-          {coordinate}        
-        </div> 
     }
     return (
       <div className="container theme-showcase pt-5" role="main">
