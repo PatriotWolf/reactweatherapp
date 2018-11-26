@@ -15,7 +15,6 @@ function WeatherComponent(props) {
   const data = props.weatherData.query.results.channel;
   const weatherCode= data.item.condition.code;
   let weatherUrl= '';
-  console.log(data)
   if ((data.item.condition.code >= 0) && (data.item.condition.code <= 4)){
     weatherUrl= "https://static.thenounproject.com/png/428-200.png"
   } else if((data.item.condition.code >= 5) && (data.item.condition.code <= 12)) {

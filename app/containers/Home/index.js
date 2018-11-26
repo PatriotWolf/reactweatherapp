@@ -14,6 +14,7 @@ import { compose } from 'redux';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import WeatherComponent from 'components/WeatherComponent';
+import SearchComponent from 'components/SearchComponent';
 
 import { homeStoreCoordinatesAction } from './actions';
 import makeSelectHome,{selectGetLocation} from './selectors';
@@ -28,9 +29,12 @@ export class Home extends React.PureComponent {
     this.state = {
       isUpdated:false,
       isError: false,
+      text:'',
     }
     this.getCoordinates = this.getCoordinates.bind(this);
     this.onHandleGetCoordinatesError = this.onHandleGetCoordinatesError.bind(this);
+    this.onHandleInputChange = this.onHandleInputChange.bind(this);
+    this.onSumbitNewLocation = this.onSumbitNewLocation.bind(this);
     navigator.geolocation.getCurrentPosition(this.getCoordinates, this.onHandleGetCoordinatesError );
   }
   getCoordinates(position){
@@ -40,6 +44,12 @@ export class Home extends React.PureComponent {
       const coordinates = {lat:position.coords.latitude, lng:position.coords.longitude}
       this.props.dispatch(homeStoreCoordinatesAction(coordinates));
     }
+  }
+  onSumbitNewLocation(){
+    console.log(this.state);
+  }
+  onHandleInputChange(event){
+    this.setState({text: event.target.value});
   }
   onHandleGetCoordinatesError(error){
     this.setState({isError:true});
@@ -65,6 +75,7 @@ export class Home extends React.PureComponent {
     if(this.props.home.condition.isWeatherLoaded){
       content=<div>
       <WeatherComponent weatherData={this.props.home.weather}/>
+      <SearchComponent text={this.state.text} handleChange={this.onHandleInputChange} onSubmitSearch={this.onSumbitNewLocation}/>
       </div>
     }
     return (
