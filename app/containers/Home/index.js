@@ -63,7 +63,9 @@ export class Home extends React.PureComponent {
       </div>)
     }
     if(this.props.home.condition.isWeatherLoaded){
-      content=<WeatherComponent weatherData={this.props.home.weather}/>
+      content=<div>
+      <WeatherComponent weatherData={this.props.home.weather}/>
+      </div>
     }
     return (
       <div className="container theme-showcase pt-5" role="main">
