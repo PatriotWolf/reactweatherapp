@@ -2,7 +2,7 @@ import { take, call, put, select,takeLatest } from 'redux-saga/effects';
 import request from 'utils/request';
 
 import { HOME_STORE_COORDINATES, HOME_GET_COORDINATES} from './constants';
-import {homeStoreWeatherAction} from './actions';
+import {homeStoreWeatherAction,homeStoreCoordinatesAction} from './actions';
 
 
 export function* getForcast(coordinatesStore) {
@@ -11,24 +11,24 @@ export function* getForcast(coordinatesStore) {
   console.log(coordinates); 
   try {
     // Call our request helper (see 'utils/request')
-    const repos = yield call(request, query);
-    yield put(homeStoreWeatherAction(repos));
+    const weatherCondition = yield call(request, query);
+    yield put(homeStoreWeatherAction(weatherCondition));
   } catch (err) {
-    
+    //TODO: FLASH Message for error on obtain weather coordinate
   }
 }
 
 export function* getCoordinates(stateAction) {
-  const state = stateAction.payload;
-  console.log('obtained state named ',state)
-  let query = `https://maps.googleapis.com/maps/api/geocode/json?address=${state}&key=AIzaSyAotSLvakvDflDzjS5rTd9uw6xNp2WdQnc`;
+  const place = stateAction.payload;
+  console.log('obtained place named ',place);
+  let query = `https://nominatim.openstreetmap.org/search?q=${place}&format=json`;
   try {
     // Call our request helper (see 'utils/request')
     const repos = yield call(request, query);
-    console.log(repos.results[0].geometry.location);
-    // yield put(homeStoreWeatherAction(repos));
+    const coordinates = {lat:repos[0].lat, lng:repos[0].lon}
+    yield put(homeStoreCoordinatesAction(coordinates));
   } catch (err) {
-    
+    //TODO: FLASH Message for error on obtain new Coordinate
   }
 }
 // Individual exports for testing
