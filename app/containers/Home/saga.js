@@ -12,8 +12,13 @@ export function* getForcast(coordinatesStore) {
   try {
     // Call our request helper (see 'utils/request')
     const weatherCondition = yield call(request, query);
-    yield put(homeStoreWeatherAction(weatherCondition));
+    console.log(weatherCondition)
+    if(weatherCondition.query.results.channel.item)
+      yield put(homeStoreWeatherAction(weatherCondition));
+    else
+      throw ("Fail to obtain weather condition");
   } catch (err) {
+    console.log(err)
     //TODO: FLASH Message for error on obtain weather coordinate
   }
 }
@@ -25,8 +30,11 @@ export function* getCoordinates(stateAction) {
   try {
     // Call our request helper (see 'utils/request')
     const repos = yield call(request, query);
-    const coordinates = {lat:repos[0].lat, lng:repos[0].lon}
-    yield put(homeStoreCoordinatesAction(coordinates));
+    console.log(repos)
+    if (repos.length > 0){
+      const coordinates = {lat:repos[0].lat, lng:repos[0].lon}
+      yield put(homeStoreCoordinatesAction(coordinates));
+    }
   } catch (err) {
     //TODO: FLASH Message for error on obtain new Coordinate
   }
